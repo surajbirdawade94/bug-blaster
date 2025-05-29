@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-export default function TicketForm() {
+export default function TicketForm({ dispatch }) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState('1');
@@ -21,6 +21,14 @@ export default function TicketForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         clearForm();
+        const newTicket = {
+            id: new Date().toISOString,
+            title,
+            description,
+            priority: parseInt(priority)
+        }
+
+        dispatch({ type: 'ADD_TICKET', payload: newTicket });
     }
 
     return (
