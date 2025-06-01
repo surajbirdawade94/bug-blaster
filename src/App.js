@@ -4,11 +4,12 @@ import './styles.css';
 import TicketForm from './components/TicketForm';
 import ticketReducer from './reducers/ticketReducer';
 import { useReducer } from 'react';
+import TicketList from './components/TicketList';
 
 function App() {
-
   const intitalState = {
-    tickets: []
+    tickets: [],
+    editingTicket: null
   }
   const [state, dispatch] = useReducer(ticketReducer, intitalState);
 
@@ -16,9 +17,16 @@ function App() {
     <div className="App">
       <div className="container">
         <h1>Bug Blaster</h1>
-        <TicketForm dispatch={dispatch}/>
-    
-        </div>
+        <TicketForm dispatch={dispatch} editingTicket={state.editingTicket} />
+        <h2>Tickets</h2>
+        {
+          state.tickets.length > 0 && (
+            <div className='results'>
+              <TicketList tickets={state.tickets} dispatch={dispatch} />
+            </div>
+          )
+        }
+      </div>
     </div>
   );
 }
